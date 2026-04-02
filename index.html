@@ -70,6 +70,31 @@ body{
 }
 .brand-sub{font-size:11px;color:var(--muted);margin-top:2px;}
 
+/* 유튜브 구독 버튼 스타일 */
+.yt-subscribe-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ff0000; /* 유튜브 레드 */
+  color: white;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+}
+
+.yt-subscribe-btn:hover {
+  background-color: #cc0000; /* 호버 시 약간 어둡게 */
+}
+
+.yt-icon {
+  width: 18px;
+  height: 18px;
+  fill: white;
+}
+
 /* ── 히어로 ── */
 .hero{margin-bottom:1.5rem;}
 .hero-tag{
@@ -205,6 +230,10 @@ body{
         <div class="brand-sub">경제·투자 인사이트</div>
       </div>
     </div>
+    <a href="https://www.youtube.com/@KnowSense_KR" target="_blank" class="yt-subscribe-btn">
+      <svg class="yt-icon" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      채널 구독하기
+    </a>
   </header>
 
   <div class="hero">
@@ -257,4 +286,178 @@ body{
 <script>
 /* =====================================================================
    [데이터 수정 안내] 
-   이후 업데이트 시
+   이후 업데이트 시 아래 etfData 객체의 m3, m6, y1 숫자만 수정하면 됩니다.
+   ===================================================================== */
+const etfData = {
+  kr: [
+    { name: "TIGER 미국나스닥100", ticker: "133690", cat: "해외지수", m3: 11.2, m6: 22.5, y1: 45.3 },
+    { name: "TIGER 미국S&P500", ticker: "360750", cat: "해외지수", m3: 9.5, m6: 18.2, y1: 31.4 },
+    { name: "PLUS K방산", ticker: "450320", cat: "방산", m3: 15.4, m6: 28.7, y1: 55.2 },
+    { name: "KODEX 반도체", ticker: "091160", cat: "섹터", m3: 8.5, m6: 15.3, y1: 35.8 },
+    { name: "TIGER 인도니프티50", ticker: "453870", cat: "해외지수", m3: 6.2, m6: 12.5, y1: 24.1 },
+    { name: "KODEX 200", ticker: "069500", cat: "시장대표", m3: 2.1, m6: 5.4, y1: 8.2 },
+    { name: "TIGER 배당성장", ticker: "211560", cat: "배당", m3: 3.5, m6: 7.2, y1: 12.5 },
+    { name: "KODEX 자동차", ticker: "093240", cat: "섹터", m3: 4.2, m6: 8.5, y1: 18.4 },
+    { name: "KODEX 인버스", ticker: "114800", cat: "파생", m3: -2.3, m6: -5.8, y1: -9.5 },
+    { name: "KODEX 2차전지산업", ticker: "305720", cat: "테마", m3: -4.5, m6: -15.2, y1: -32.4 }
+  ],
+  us: [
+    { name: "VanEck Semiconductor", ticker: "SMH", cat: "반도체", m3: 18.5, m6: 38.2, y1: 72.5 },
+    { name: "Invesco QQQ", ticker: "QQQ", cat: "기술/성장", m3: 11.4, m6: 23.1, y1: 46.2 },
+    { name: "iShares U.S. Aerospace & Defense", ticker: "ITA", cat: "방산", m3: 10.2, m6: 19.5, y1: 35.4 },
+    { name: "SPDR S&P 500", ticker: "SPY", cat: "시장대표", m3: 9.8, m6: 18.5, y1: 32.1 },
+    { name: "Vanguard Total Stock", ticker: "VTI", cat: "시장대표", m3: 9.2, m6: 17.4, y1: 30.5 },
+    { name: "Energy Select", ticker: "XLE", cat: "섹터(에너지)", m3: 7.5, m6: 12.2, y1: 15.8 },
+    { name: "Schwab US Dividend", ticker: "SCHD", cat: "배당", m3: 4.2, m6: 8.5, y1: 14.2 },
+    { name: "Health Care Select", ticker: "XLV", cat: "섹터(헬스)", m3: 3.5, m6: 6.2, y1: 11.5 },
+    { name: "Vanguard Real Estate", ticker: "VNQ", cat: "부동산", m3: 1.5, m6: 5.4, y1: 8.2 },
+    { name: "iShares 20+ Year Bond", ticker: "TLT", cat: "채권", m3: -3.2, m6: -6.5, y1: -10.4 }
+  ]
+};
+
+let currentChart = null;
+let currentMarket = 'kr';
+let currentPeriod = 'm3'; 
+
+function formatReturn(val) {
+  if (val > 0) return { text: `+${val.toFixed(1)}%`, cls: 'val-up' };
+  if (val < 0) return { text: `${val.toFixed(1)}%`, cls: 'val-down' };
+  return { text: `0.0%`, cls: 'val-neu' };
+}
+
+function getPeriodName(period) {
+  if (period === 'm3') return '3개월';
+  if (period === 'm6') return '6개월';
+  if (period === 'y1') return '1년';
+}
+
+function setMarket(market) {
+  currentMarket = market;
+  document.getElementById('tab-kr').classList.remove('active');
+  document.getElementById('tab-us').classList.remove('active');
+  document.getElementById(`tab-${market}`).classList.add('active');
+  renderDashboard();
+}
+
+function setPeriod(period) {
+  currentPeriod = period;
+  document.getElementById('ptab-m3').classList.remove('active');
+  document.getElementById('ptab-m6').classList.remove('active');
+  document.getElementById('ptab-y1').classList.remove('active');
+  document.getElementById(`ptab-${period}`).classList.add('active');
+  renderDashboard();
+}
+
+function renderDashboard() {
+  const data = [...etfData[currentMarket]];
+  data.sort((a, b) => b[currentPeriod] - a[currentPeriod]);
+
+  document.getElementById('th-m3').classList.remove('highlight-col');
+  document.getElementById('th-m6').classList.remove('highlight-col');
+  document.getElementById('th-y1').classList.remove('highlight-col');
+  document.getElementById(`th-${currentPeriod}`).classList.add('highlight-col');
+
+  const periodName = getPeriodName(currentPeriod);
+  document.getElementById('chart-title').innerText = `📊 ${periodName} 누적 수익률 순위`;
+
+  const tbody = document.getElementById('table-body');
+  tbody.innerHTML = '';
+
+  data.forEach((item, index) => {
+    const rank = index + 1;
+    let rankBadgeClass = 'rank-badge';
+    if(rank === 1) rankBadgeClass += ' rank-1';
+    else if(rank === 2) rankBadgeClass += ' rank-2';
+    else if(rank === 3) rankBadgeClass += ' rank-3';
+
+    const m3 = formatReturn(item.m3);
+    const m6 = formatReturn(item.m6);
+    const y1 = formatReturn(item.y1);
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="${rankBadgeClass}">${rank}</span></td>
+      <td>
+        <span class="etf-name">${item.name}</span> <span class="etf-category">${item.cat}</span>
+        <span class="etf-ticker">${item.ticker}</span>
+      </td>
+      <td class="${m3.cls} ${currentPeriod === 'm3' ? 'highlight-cell' : ''}">${m3.text}</td>
+      <td class="${m6.cls} ${currentPeriod === 'm6' ? 'highlight-cell' : ''}">${m6.text}</td>
+      <td class="${y1.cls} ${currentPeriod === 'y1' ? 'highlight-cell' : ''}">${y1.text}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  const labels = data.map((item, index) => {
+    let shortName = item.name.replace('KODEX ', '').replace('TIGER ', '').replace('PLUS ', '').replace('SPDR ', '').replace('Invesco ', '').replace('VanEck ', '');
+    return `${index + 1}. ${shortName}`;
+  });
+  
+  const chartData = data.map(item => item[currentPeriod]);
+  const bgColors = chartData.map(val => val >= 0 ? 'rgba(255, 77, 106, 0.8)' : 'rgba(91, 156, 246, 0.8)');
+  const borderColors = chartData.map(val => val >= 0 ? '#ff4d6a' : '#5b9cf6');
+
+  if (currentChart) {
+    currentChart.destroy();
+  }
+
+  const ctx = document.getElementById('returnChart').getContext('2d');
+  currentChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: `${periodName} 수익률(%)`,
+        data: chartData,
+        backgroundColor: bgColors,
+        borderColor: borderColors,
+        borderWidth: 1,
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1c1c23',
+          titleColor: '#eeeef0',
+          bodyColor: '#fff',
+          callbacks: {
+            title: function(context) {
+              const idx = context[0].dataIndex;
+              return `${data[idx].name} (${data[idx].ticker})`;
+            },
+            label: function(context) {
+              let val = context.raw;
+              return val >= 0 ? `수익률: +${val.toFixed(1)}%` : `수익률: ${val.toFixed(1)}%`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#999aaa', font: { size: 10 } },
+          grid: { display: false }
+        },
+        y: {
+          ticks: { 
+            color: '#666672', 
+            font: { size: 10 },
+            callback: value => value + '%'
+          },
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          border: { display: false }
+        }
+      }
+    }
+  });
+}
+
+window.onload = () => {
+  renderDashboard();
+};
+</script>
+</body>
+</html>
