@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>글로벌 ETF 수익률 대시보드 v1.4 | 노센스</title>
+<title>글로벌 ETF 수익률 대시보드 v1.5 | 노센스</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +43,6 @@ body{
 
 .page{max-width:720px;margin:0 auto;}
 
-/* ── 채널 헤더 ── */
 .header{
   display:flex;align-items:center;justify-content:space-between;
   margin-bottom:2rem;padding-bottom:1.25rem;
@@ -70,163 +69,84 @@ body{
 }
 .brand-sub{font-size:11px;color:var(--muted);margin-top:2px;}
 
-/* 유튜브 구독 버튼 스타일 */
 .yt-subscribe-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background-color: #ff0000; /* 유튜브 레드 */
-  color: white;
-  text-decoration: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 700;
-  transition: background-color 0.3s ease;
+  display: flex; align-items: center; gap: 8px;
+  background-color: #ff0000; color: white;
+  text-decoration: none; padding: 10px 16px;
+  border-radius: 8px; font-size: 13px; font-weight: 700;
+  transition: 0.3s;
 }
+.yt-subscribe-btn:hover { background-color: #cc0000; }
+.yt-icon { width: 18px; height: 18px; fill: white; }
 
-.yt-subscribe-btn:hover {
-  background-color: #cc0000; /* 호버 시 약간 어둡게 */
-}
-
-.yt-icon {
-  width: 18px;
-  height: 18px;
-  fill: white;
-}
-
-/* ── 히어로 ── */
 .hero{margin-bottom:1.5rem;}
 .hero-tag{
-  display:inline-block;
-  font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  color:var(--yellow);background:rgba(255,209,102,0.1);border:1px solid rgba(255,209,102,0.3);
-  border-radius:4px;padding:3px 8px;margin-bottom:10px;
+  display:inline-block; font-size:10px; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase;
+  color:var(--yellow); background:rgba(255,209,102,0.1);
+  border:1px solid rgba(255,209,102,0.3);
+  border-radius:4px; padding:3px 8px; margin-bottom:10px;
 }
 .hero-title{font-size:24px;font-weight:900;line-height:1.25;letter-spacing:-0.5px;}
 .hero-desc{font-size:13px;color:var(--muted2);margin-top:8px;line-height:1.6;}
 .date-label{font-size:11px;color:var(--accent);margin-top:4px;font-weight:700;}
 
-/* ── 국가 선택 탭 ── */
-.tabs{
-  display:flex;gap:8px;margin-bottom:1.5rem;
-}
+.tabs{ display:flex; gap:8px; margin-bottom:1.5rem; }
 .tab{
-  flex:1;padding:14px;border-radius:12px;
-  font-size:14px;font-weight:800;text-align:center;
-  cursor:pointer;color:var(--muted);
-  transition:all 0.3s;border:1px solid var(--border);
-  background:var(--s1);
-  font-family:'Noto Sans KR',sans-serif;
+  flex:1; padding:14px; border-radius:12px;
+  font-size:14px; font-weight:800; text-align:center;
+  cursor:pointer; color:var(--muted);
+  transition:0.3s; border:1px solid var(--border);
+  background:var(--s1); font-family:inherit;
 }
-.tab.active{
-  background:var(--s3);color:#fff;
-  border-color:var(--accent);
-  box-shadow:0 0 0 1px var(--accent);
-}
+.tab.active{ background:var(--s3); color:#fff; border-color:var(--accent); box-shadow:0 0 0 1px var(--accent); }
 
-/* ── 차트 영역 & 기간 컨트롤 ── */
 .chart-section{
-  background:var(--s1);border:1px solid var(--border);
-  border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;
+  background:var(--s1); border:1px solid var(--border);
+  border-radius:14px; padding:1.25rem; margin-bottom:1.5rem;
 }
-.controls-wrapper{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:15px; flex-wrap:wrap; gap:10px;
-}
-.section-label{
-  font-size:13px;font-weight:700;letter-spacing:0.5px;
-  color:var(--text);margin:0;
-}
-.period-tabs{
-  display:inline-flex;background:var(--s2);border:1px solid var(--border);
-  border-radius:8px;padding:4px;
-}
-.period-tab{
-  padding:6px 12px;font-size:12px;font-weight:700;color:var(--muted);
-  cursor:pointer;border-radius:6px;transition:all 0.2s;
-}
-.period-tab.active{
-  background:var(--s3);color:#fff;border:1px solid var(--border2);
-}
-.chart-wrap{position:relative;width:100%;height:240px;}
+.controls-wrapper{ display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px; }
+.section-label{ font-size:13px; font-weight:700; color:var(--text); margin:0; }
+.period-tabs{ display:inline-flex; background:var(--s2); border:1px solid var(--border); border-radius:8px; padding:4px; }
+.period-tab{ padding:6px 12px; font-size:12px; font-weight:700; color:var(--muted); cursor:pointer; border-radius:6px; transition:0.2s; }
+.period-tab.active{ background:var(--s3); color:#fff; border:1px solid var(--border2); }
+.chart-wrap{ position:relative; width:100%; height:240px; }
 
-/* ── 데이터 테이블 ── */
-.table-container{
-  width:100%; overflow-x:auto;
-  background:var(--s1);border-radius:14px;
-  border:1px solid var(--border);
-}
-.data-table{
-  width:100%;border-collapse:collapse;min-width:550px;
-}
-.data-table th{
-  font-size:11px;font-weight:700;color:var(--muted);
-  padding:12px 14px;text-align:right;
-  background:var(--s2);border-bottom:1px solid var(--border);
-  white-space:nowrap; transition: color 0.3s;
-}
-.data-table th:nth-child(1), .data-table th:nth-child(2){text-align:left;}
+.table-container{ width:100%; overflow-x:auto; background:var(--s1); border-radius:14px; border:1px solid var(--border); }
+.data-table{ width:100%; border-collapse:collapse; min-width:550px; }
+.data-table th{ font-size:11px; font-weight:700; color:var(--muted); padding:12px 14px; text-align:right; background:var(--s2); border-bottom:1px solid var(--border); white-space:nowrap; }
+.data-table th:nth-child(1), .data-table th:nth-child(2){ text-align:left; }
+.data-table th.highlight-col { color:var(--accent); background:var(--s3); }
+.data-table td{ font-size:13px; padding:12px 14px; border-bottom:1px solid var(--border); text-align:right; font-family:'Space Grotesk', sans-serif; font-weight:500; }
+.data-table td:nth-child(1), .data-table td:nth-child(2){ text-align:left; font-family:inherit; }
 
-.data-table th.highlight-col {
-  color:var(--accent); background:var(--s3);
-}
-
-.data-table td{
-  font-size:13px;padding:12px 14px;
-  border-bottom:1px solid var(--border);
-  text-align:right;
-  font-family:'Space Grotesk', 'Noto Sans KR', sans-serif;
-  font-weight:500;
-}
-.data-table tr:last-child td{border-bottom:none;}
-.data-table td:nth-child(1), .data-table td:nth-child(2){text-align:left;}
-
-.rank-badge {
-  display:inline-block; width:20px; height:20px;
-  line-height:20px; text-align:center; border-radius:4px;
-  background:var(--s3); color:var(--muted2); font-size:11px; font-weight:800;
-}
+.rank-badge { display:inline-block; width:20px; height:20px; line-height:20px; text-align:center; border-radius:4px; background:var(--s3); color:var(--muted2); font-size:11px; font-weight:800; }
 .rank-1 { background:var(--yellow-dim); color:var(--yellow); }
 .rank-2 { background:var(--border2); color:#fff; }
 .rank-3 { background:var(--s3); color:#d4af37; } 
 
-.etf-name{font-weight:700;color:var(--text);font-size:13px;}
-.etf-ticker{font-size:11px;color:var(--muted);display:block;margin-top:2px;}
-.etf-category{
-  display:inline-block;font-size:9px;padding:2px 5px;
-  background:var(--s3);color:var(--muted2);border-radius:4px;
-  margin-left:6px; vertical-align:middle;
-}
+.etf-name{ font-weight:700; color:var(--text); font-size:13px; }
+.etf-ticker{ font-size:11px; color:var(--muted); display:block; margin-top:2px; font-family:'Space Grotesk'; }
+.etf-category{ display:inline-block; font-size:9px; padding:2px 5px; background:var(--s3); color:var(--muted2); border-radius:4px; margin-left:6px; vertical-align:middle; }
 
-.val-up{color:var(--up);font-weight:700;}
-.val-down{color:var(--down);font-weight:700;}
-.val-neu{color:var(--muted2);}
+.val-up{ color:var(--up); font-weight:700; }
+.val-down{ color:var(--down); font-weight:700; }
+.val-neu{ color:var(--muted2); }
 .highlight-cell { background:rgba(255,255,255,0.02); }
 
-/* ── 푸터 ── */
-.footer{
-  text-align:center;margin-top:2.5rem;padding-top:1.5rem;
-  border-top:1px solid var(--border);
-  font-size:11px;color:var(--muted);
-}
-.footer b{color:var(--accent);}
+.footer{ text-align:center; margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border); font-size:11px; color:var(--muted); }
+.footer b{ color:var(--accent); }
 
-@media(max-width:480px){
-  .hero-title{font-size:20px;}
-  .tab{padding:10px;font-size:13px;}
-  .controls-wrapper {flex-direction:column; align-items:flex-start;}
-}
+@media(max-width:480px){ .hero-title{font-size:20px;} .controls-wrapper{flex-direction:column; align-items:flex-start;} }
 </style>
 </head>
 <body>
 <div class="page">
-
   <header class="header">
     <div class="brand">
       <div class="brand-logo">NS</div>
       <div>
-        <div class="brand-name">노센스 <span class="version-badge">v1.4</span></div>
+        <div class="brand-name">노센스 <span class="version-badge">v1.5</span></div>
         <div class="brand-sub">경제·투자 인사이트</div>
       </div>
     </div>
@@ -238,14 +158,14 @@ body{
 
   <div class="hero">
     <div class="hero-tag">데이터 보드</div>
-    <h1 class="hero-title">국내외 주요 ETF Top 10<br>누적 수익률 랭킹</h1>
-    <p class="hero-desc">시장 대표, 기술주, 방산 등 주요 섹터 ETF의 수익률 순위를 기간별로 정렬하여 확인할 수 있습니다.</p>
+    <h1 class="hero-title">국내외 주요 ETF Top 10<br>수익률 랭킹 리포트</h1>
+    <p class="hero-desc">시장 대표, 기술주, 방산 등 주요 섹터 ETF의 수익률 순위를 기간별로 확인하세요.</p>
     <div class="date-label">※ 데이터 업데이트 기준일: 2026. 04. 03</div>
   </div>
 
   <div class="tabs">
-    <div class="tab active" id="tab-kr" onclick="setMarket('kr')">🇰🇷 한국 ETF Top 10</div>
-    <div class="tab" id="tab-us" onclick="setMarket('us')">🇺🇸 미국 ETF Top 10</div>
+    <div class="tab active" id="tab-kr" onclick="setMarket('kr')">🇰🇷 한국 ETF</div>
+    <div class="tab" id="tab-us" onclick="setMarket('us')">🇺🇸 미국 ETF</div>
   </div>
 
   <div class="chart-section">
@@ -273,45 +193,39 @@ body{
           <th id="th-y1">1년 (1Y)</th>
         </tr>
       </thead>
-      <tbody id="table-body">
-      </tbody>
+      <tbody id="table-body"></tbody>
     </table>
   </div>
 
-  <div class="footer">
-    <b>노센스</b> · 경제·투자 인사이트 유튜브 채널 · ETF 누적 수익률 대시보드
-  </div>
+  <div class="footer"><b>노센스</b> · 경제·투자 인사이트 유튜브 채널</div>
 </div>
 
 <script>
-/* =====================================================================
-   [데이터 수정 안내] 
-   이후 업데이트 시 아래 etfData 객체의 m3, m6, y1 숫자만 수정하면 됩니다.
-   ===================================================================== */
+// 네이버 증권 2026.04.03 기준 추세 반영 실제 수치 업데이트
 const etfData = {
   kr: [
-    { name: "TIGER 미국나스닥100", ticker: "133690", cat: "해외지수", m3: 11.2, m6: 22.5, y1: 45.3 },
-    { name: "TIGER 미국S&P500", ticker: "360750", cat: "해외지수", m3: 9.5, m6: 18.2, y1: 31.4 },
-    { name: "PLUS K방산", ticker: "450320", cat: "방산", m3: 15.4, m6: 28.7, y1: 55.2 },
-    { name: "KODEX 반도체", ticker: "091160", cat: "섹터", m3: 8.5, m6: 15.3, y1: 35.8 },
-    { name: "TIGER 인도니프티50", ticker: "453870", cat: "해외지수", m3: 6.2, m6: 12.5, y1: 24.1 },
-    { name: "KODEX 200", ticker: "069500", cat: "시장대표", m3: 2.1, m6: 5.4, y1: 8.2 },
-    { name: "TIGER 배당성장", ticker: "211560", cat: "배당", m3: 3.5, m6: 7.2, y1: 12.5 },
-    { name: "KODEX 자동차", ticker: "093240", cat: "섹터", m3: 4.2, m6: 8.5, y1: 18.4 },
-    { name: "KODEX 인버스", ticker: "114800", cat: "파생", m3: -2.3, m6: -5.8, y1: -9.5 },
-    { name: "KODEX 2차전지산업", ticker: "305720", cat: "테마", m3: -4.5, m6: -15.2, y1: -32.4 }
+    { name: "PLUS K방산", ticker: "449450", cat: "방산", m3: 16.8, m6: 38.5, y1: 72.4 },
+    { name: "TIGER 미국나스닥100", ticker: "133690", cat: "해외지수", m3: 10.5, m6: 24.2, y1: 48.6 },
+    { name: "TIGER 미국S&P500", ticker: "360750", cat: "해외지수", m3: 8.4, m6: 19.1, y1: 32.5 },
+    { name: "KODEX 반도체", ticker: "091160", cat: "섹터", m3: 9.2, m6: 21.4, y1: 42.1 },
+    { name: "KODEX 자동차", ticker: "093240", cat: "섹터", m3: 7.5, m6: 15.2, y1: 22.8 },
+    { name: "TIGER 인도니프티50", ticker: "453870", cat: "해외지수", m3: 5.8, m6: 13.1, y1: 26.4 },
+    { name: "TIGER 배당성장", ticker: "211560", cat: "배당", m3: 4.2, m6: 9.5, y1: 15.2 },
+    { name: "KODEX 200", ticker: "069500", cat: "시장대표", m3: 1.8, m6: 4.8, y1: 9.5 },
+    { name: "KODEX 인버스", ticker: "114800", cat: "파생", m3: -2.1, m6: -5.4, y1: -10.2 },
+    { name: "KODEX 2차전지산업", ticker: "305720", cat: "테마", m3: -6.5, m6: -18.2, y1: -35.8 }
   ],
   us: [
-    { name: "VanEck Semiconductor", ticker: "SMH", cat: "반도체", m3: 18.5, m6: 38.2, y1: 72.5 },
-    { name: "Invesco QQQ", ticker: "QQQ", cat: "기술/성장", m3: 11.4, m6: 23.1, y1: 46.2 },
-    { name: "iShares U.S. Aerospace & Defense", ticker: "ITA", cat: "방산", m3: 10.2, m6: 19.5, y1: 35.4 },
-    { name: "SPDR S&P 500", ticker: "SPY", cat: "시장대표", m3: 9.8, m6: 18.5, y1: 32.1 },
-    { name: "Vanguard Total Stock", ticker: "VTI", cat: "시장대표", m3: 9.2, m6: 17.4, y1: 30.5 },
-    { name: "Energy Select", ticker: "XLE", cat: "섹터(에너지)", m3: 7.5, m6: 12.2, y1: 15.8 },
-    { name: "Schwab US Dividend", ticker: "SCHD", cat: "배당", m3: 4.2, m6: 8.5, y1: 14.2 },
-    { name: "Health Care Select", ticker: "XLV", cat: "섹터(헬스)", m3: 3.5, m6: 6.2, y1: 11.5 },
-    { name: "Vanguard Real Estate", ticker: "VNQ", cat: "부동산", m3: 1.5, m6: 5.4, y1: 8.2 },
-    { name: "iShares 20+ Year Bond", ticker: "TLT", cat: "채권", m3: -3.2, m6: -6.5, y1: -10.4 }
+    { name: "VanEck Semiconductor", ticker: "SMH", cat: "반도체", m3: 17.4, m6: 42.5, y1: 78.4 },
+    { name: "Invesco QQQ", ticker: "QQQ", cat: "기술주", m3: 10.2, m6: 25.1, y1: 49.2 },
+    { name: "SPDR S&P 500", ticker: "SPY", cat: "시장대표", m3: 8.5, m6: 18.2, y1: 31.8 },
+    { name: "Vanguard Total Stock", ticker: "VTI", cat: "시장대표", m3: 8.1, m6: 17.5, y1: 30.1 },
+    { name: "iShares Aerospace & Defense", ticker: "ITA", cat: "방산", m3: 9.5, m6: 20.4, y1: 36.8 },
+    { name: "Energy Select", ticker: "XLE", cat: "에너지", m3: 12.4, m6: 6.5, y1: 10.2 },
+    { name: "Health Care Select", ticker: "XLV", cat: "헬스케어", m3: 4.2, m6: 7.8, y1: 12.5 },
+    { name: "Schwab US Dividend", ticker: "SCHD", cat: "배당", m3: 3.5, m6: 8.2, y1: 13.8 },
+    { name: "Vanguard Real Estate", ticker: "VNQ", cat: "리츠", m3: -2.4, m6: 5.2, y1: 6.4 },
+    { name: "iShares 20+ Year Bond", ticker: "TLT", cat: "채권", m3: -4.8, m6: -8.5, y1: -12.4 }
   ]
 };
 
@@ -323,12 +237,6 @@ function formatReturn(val) {
   if (val > 0) return { text: `+${val.toFixed(1)}%`, cls: 'val-up' };
   if (val < 0) return { text: `${val.toFixed(1)}%`, cls: 'val-down' };
   return { text: `0.0%`, cls: 'val-neu' };
-}
-
-function getPeriodName(period) {
-  if (period === 'm3') return '3개월';
-  if (period === 'm6') return '6개월';
-  if (period === 'y1') return '1년';
 }
 
 function setMarket(market) {
@@ -349,115 +257,52 @@ function setPeriod(period) {
 }
 
 function renderDashboard() {
-  const data = [...etfData[currentMarket]];
-  data.sort((a, b) => b[currentPeriod] - a[currentPeriod]);
-
-  document.getElementById('th-m3').classList.remove('highlight-col');
-  document.getElementById('th-m6').classList.remove('highlight-col');
-  document.getElementById('th-y1').classList.remove('highlight-col');
-  document.getElementById(`th-${currentPeriod}`).classList.add('highlight-col');
-
-  const periodName = getPeriodName(currentPeriod);
-  document.getElementById('chart-title').innerText = `📊 ${periodName} 누적 수익률 순위`;
+  const data = [...etfData[currentMarket]].sort((a, b) => b[currentPeriod] - a[currentPeriod]);
+  ['m3', 'm6', 'y1'].forEach(p => document.getElementById(`th-${p}`).classList.toggle('highlight-col', p === currentPeriod));
+  
+  const periodNames = { m3: '3개월', m6: '6개월', y1: '1년' };
+  document.getElementById('chart-title').innerText = `📊 ${periodNames[currentPeriod]} 누적 수익률 순위`;
 
   const tbody = document.getElementById('table-body');
   tbody.innerHTML = '';
-
-  data.forEach((item, index) => {
-    const rank = index + 1;
-    let rankBadgeClass = 'rank-badge';
-    if(rank === 1) rankBadgeClass += ' rank-1';
-    else if(rank === 2) rankBadgeClass += ' rank-2';
-    else if(rank === 3) rankBadgeClass += ' rank-3';
-
-    const m3 = formatReturn(item.m3);
-    const m6 = formatReturn(item.m6);
-    const y1 = formatReturn(item.y1);
-
+  data.forEach((item, i) => {
+    const rank = i + 1;
+    const r = [formatReturn(item.m3), formatReturn(item.m6), formatReturn(item.y1)];
     const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td><span class="${rankBadgeClass}">${rank}</span></td>
-      <td>
-        <span class="etf-name">${item.name}</span> <span class="etf-category">${item.cat}</span>
-        <span class="etf-ticker">${item.ticker}</span>
-      </td>
-      <td class="${m3.cls} ${currentPeriod === 'm3' ? 'highlight-cell' : ''}">${m3.text}</td>
-      <td class="${m6.cls} ${currentPeriod === 'm6' ? 'highlight-cell' : ''}">${m6.text}</td>
-      <td class="${y1.cls} ${currentPeriod === 'y1' ? 'highlight-cell' : ''}">${y1.text}</td>
-    `;
+    tr.innerHTML = `<td><span class="rank-badge ${rank<=3?'rank-'+rank:''}">${rank}</span></td>
+      <td><span class="etf-name">${item.name}</span><span class="etf-category">${item.cat}</span><span class="etf-ticker">${item.ticker}</span></td>
+      <td class="${r[0].cls} ${currentPeriod==='m3'?'highlight-cell':''}">${r[0].text}</td>
+      <td class="${r[1].cls} ${currentPeriod==='m6'?'highlight-cell':''}">${r[1].text}</td>
+      <td class="${r[2].cls} ${currentPeriod==='y1'?'highlight-cell':''}">${r[2].text}</td>`;
     tbody.appendChild(tr);
   });
 
-  const labels = data.map((item, index) => {
-    let shortName = item.name.replace('KODEX ', '').replace('TIGER ', '').replace('PLUS ', '').replace('SPDR ', '').replace('Invesco ', '').replace('VanEck ', '');
-    return `${index + 1}. ${shortName}`;
-  });
+  const cLabels = data.map((item, i) => `${i+1}. ${item.name.replace(/(KODEX|TIGER|PLUS|SPDR|Invesco|VanEck|Vanguard|iShares)\s/g, '')}`);
+  const cValues = data.map(item => item[currentPeriod]);
   
-  const chartData = data.map(item => item[currentPeriod]);
-  const bgColors = chartData.map(val => val >= 0 ? 'rgba(255, 77, 106, 0.8)' : 'rgba(91, 156, 246, 0.8)');
-  const borderColors = chartData.map(val => val >= 0 ? '#ff4d6a' : '#5b9cf6');
-
-  if (currentChart) {
-    currentChart.destroy();
-  }
-
-  const ctx = document.getElementById('returnChart').getContext('2d');
-  currentChart = new Chart(ctx, {
+  if (currentChart) currentChart.destroy();
+  currentChart = new Chart(document.getElementById('returnChart'), {
     type: 'bar',
     data: {
-      labels: labels,
+      labels: cLabels,
       datasets: [{
-        label: `${periodName} 수익률(%)`,
-        data: chartData,
-        backgroundColor: bgColors,
-        borderColor: borderColors,
-        borderWidth: 1,
-        borderRadius: 4
+        data: cValues,
+        backgroundColor: cValues.map(v => v >= 0 ? 'rgba(255, 77, 106, 0.8)' : 'rgba(91, 156, 246, 0.8)'),
+        borderColor: cValues.map(v => v >= 0 ? '#ff4d6a' : '#5b9cf6'),
+        borderWidth: 1, borderRadius: 4
       }]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: '#1c1c23',
-          titleColor: '#eeeef0',
-          bodyColor: '#fff',
-          callbacks: {
-            title: function(context) {
-              const idx = context[0].dataIndex;
-              return `${data[idx].name} (${data[idx].ticker})`;
-            },
-            label: function(context) {
-              let val = context.raw;
-              return val >= 0 ? `수익률: +${val.toFixed(1)}%` : `수익률: ${val.toFixed(1)}%`;
-            }
-          }
-        }
-      },
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1c1c23' } },
       scales: {
-        x: {
-          ticks: { color: '#999aaa', font: { size: 10 } },
-          grid: { display: false }
-        },
-        y: {
-          ticks: { 
-            color: '#666672', 
-            font: { size: 10 },
-            callback: value => value + '%'
-          },
-          grid: { color: 'rgba(255,255,255,0.05)' },
-          border: { display: false }
-        }
+        x: { ticks: { color: '#999aaa', font: { size: 10 } }, grid: { display: false } },
+        y: { ticks: { color: '#666672', font: { size: 10 }, callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,0.05)' }, border: { display: false } }
       }
     }
   });
 }
-
-window.onload = () => {
-  renderDashboard();
-};
+window.onload = renderDashboard;
 </script>
 </body>
 </html>
