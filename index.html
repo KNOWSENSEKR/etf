@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>글로벌 ETF 수익률 대시보드 v1.1 | 노센스</title>
+<title>글로벌 ETF 수익률 대시보드 v1.2 | 노센스</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -165,7 +165,7 @@ body{
 }
 .rank-1 { background:var(--yellow-dim); color:var(--yellow); }
 .rank-2 { background:var(--border2); color:#fff; }
-.rank-3 { background:var(--s3); color:#d4af37; } /* 동메달 느낌 */
+.rank-3 { background:var(--s3); color:#d4af37; } 
 
 .etf-name{font-weight:700;color:var(--text);font-size:13px;}
 .etf-ticker{font-size:11px;color:var(--muted);display:block;margin-top:2px;}
@@ -202,7 +202,7 @@ body{
     <div class="brand">
       <div class="brand-logo">NS</div>
       <div>
-        <div class="brand-name">노센스 <span class="version-badge">v1.1</span></div>
+        <div class="brand-name">노센스 <span class="version-badge">v1.2</span></div>
         <div class="brand-sub">경제·투자 인사이트</div>
       </div>
     </div>
@@ -256,7 +256,6 @@ body{
 </div>
 
 <script>
-// 2026년 2~3월 흐름을 반영한 리얼리티 기반 데이터
 const etfData = {
   kr: [
     { name: "KODEX 200", ticker: "069500", cat: "시장대표", m3: 4.2, m6: 8.5, y1: 15.4 },
@@ -318,17 +317,14 @@ function setPeriod(period) {
 }
 
 function renderDashboard() {
-  // 현재 선택된 시장 데이터 복사 및 정렬
   const data = [...etfData[currentMarket]];
   data.sort((a, b) => b[currentPeriod] - a[currentPeriod]);
 
-  // 테이블 헤더 하이라이트 변경
   document.getElementById('th-m3').classList.remove('highlight-col');
   document.getElementById('th-m6').classList.remove('highlight-col');
   document.getElementById('th-y1').classList.remove('highlight-col');
   document.getElementById(`th-${currentPeriod}`).classList.add('highlight-col');
 
-  // 차트 타이틀 변경
   const periodName = getPeriodName(currentPeriod);
   document.getElementById('chart-title').innerText = `📊 ${periodName} 누적 수익률 순위`;
 
@@ -360,8 +356,12 @@ function renderDashboard() {
     tbody.appendChild(tr);
   });
 
-  // 차트 그리기
-  const labels = data.map((item, index) => `${index + 1}. ${item.ticker}`);
+  // 차트 라벨을 종목코드(ticker)에서 종목명(name)으로 변경! 이름이 길면 조금 잘라줍니다.
+  const labels = data.map((item, index) => {
+    let shortName = item.name.replace('KODEX ', '').replace('TIGER ', '').replace('PLUS ', '').replace('SPDR ', '').replace('Invesco ', '').replace('VanEck ', '');
+    return `${index + 1}. ${shortName}`;
+  });
+  
   const chartData = data.map(item => item[currentPeriod]);
   const bgColors = chartData.map(val => val >= 0 ? 'rgba(255, 77, 106, 0.8)' : 'rgba(91, 156, 246, 0.8)');
   const borderColors = chartData.map(val => val >= 0 ? '#ff4d6a' : '#5b9cf6');
@@ -424,11 +424,9 @@ function renderDashboard() {
   });
 }
 
-// 최초 실행
 window.onload = () => {
   renderDashboard();
 };
 </script>
 </body>
 </html>
-```
