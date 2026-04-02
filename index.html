@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>글로벌 ETF 수익률 대시보드 v1.2 | 노센스</title>
+<title>글로벌 ETF 수익률 대시보드 v1.4 | 노센스</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -143,7 +143,6 @@ body{
 }
 .data-table th:nth-child(1), .data-table th:nth-child(2){text-align:left;}
 
-/* 강조된 열 헤더 */
 .data-table th.highlight-col {
   color:var(--accent); background:var(--s3);
 }
@@ -202,7 +201,7 @@ body{
     <div class="brand">
       <div class="brand-logo">NS</div>
       <div>
-        <div class="brand-name">노센스 <span class="version-badge">v1.2</span></div>
+        <div class="brand-name">노센스 <span class="version-badge">v1.4</span></div>
         <div class="brand-sub">경제·투자 인사이트</div>
       </div>
     </div>
@@ -212,7 +211,7 @@ body{
     <div class="hero-tag">데이터 보드</div>
     <h1 class="hero-title">국내외 주요 ETF Top 10<br>누적 수익률 랭킹</h1>
     <p class="hero-desc">시장 대표, 기술주, 방산 등 주요 섹터 ETF의 수익률 순위를 기간별로 정렬하여 확인할 수 있습니다.</p>
-    <div class="date-label">※ 기준 기간: 2026.02 ~ 2026.03 최근 추세 반영</div>
+    <div class="date-label">※ 데이터 업데이트 기준일: 2026. 04. 03</div>
   </div>
 
   <div class="tabs">
@@ -256,177 +255,6 @@ body{
 </div>
 
 <script>
-const etfData = {
-  kr: [
-    { name: "KODEX 200", ticker: "069500", cat: "시장대표", m3: 4.2, m6: 8.5, y1: 15.4 },
-    { name: "PLUS K방산", ticker: "450320", cat: "방산", m3: 18.5, m6: 34.2, y1: 65.8 },
-    { name: "TIGER 미국S&P500", ticker: "360750", cat: "해외지수", m3: 8.5, m6: 15.2, y1: 28.4 },
-    { name: "TIGER 미국나스닥100", ticker: "133690", cat: "해외지수", m3: 10.2, m6: 18.5, y1: 42.6 },
-    { name: "KODEX 반도체", ticker: "091160", cat: "섹터", m3: 12.4, m6: 22.1, y1: 45.2 },
-    { name: "TIGER 배당성장", ticker: "211560", cat: "배당", m3: 5.1, m6: 10.2, y1: 14.2 },
-    { name: "KODEX 2차전지산업", ticker: "305720", cat: "테마", m3: -5.2, m6: -12.4, y1: -28.5 },
-    { name: "TIGER 인도니프티50", ticker: "453870", cat: "해외지수", m3: 7.2, m6: 14.5, y1: 25.8 },
-    { name: "KODEX 자동차", ticker: "093240", cat: "섹터", m3: 9.5, m6: 16.2, y1: 22.4 },
-    { name: "KODEX 인버스", ticker: "114800", cat: "파생", m3: -3.8, m6: -7.5, y1: -11.2 }
-  ],
-  us: [
-    { name: "SPDR S&P 500", ticker: "SPY", cat: "시장대표", m3: 7.8, m6: 14.2, y1: 26.8 },
-    { name: "Invesco QQQ", ticker: "QQQ", cat: "기술/성장", m3: 9.5, m6: 18.4, y1: 40.5 },
-    { name: "VanEck Semiconductor", ticker: "SMH", cat: "반도체", m3: 16.5, m6: 32.4, y1: 65.4 },
-    { name: "iShares U.S. Aerospace & Defense", ticker: "ITA", cat: "방산", m3: 12.8, m6: 25.4, y1: 42.5 },
-    { name: "Vanguard Total Stock", ticker: "VTI", cat: "시장대표", m3: 7.2, m6: 13.5, y1: 24.5 },
-    { name: "Schwab US Dividend", ticker: "SCHD", cat: "배당", m3: 4.5, m6: 9.2, y1: 15.4 },
-    { name: "Health Care Select", ticker: "XLV", cat: "섹터(헬스)", m3: 3.2, m6: 6.8, y1: 12.8 },
-    { name: "Energy Select", ticker: "XLE", cat: "섹터(에너지)", m3: 8.4, m6: 12.5, y1: 18.2 },
-    { name: "iShares 20+ Year Bond", ticker: "TLT", cat: "채권", m3: -2.5, m6: -5.4, y1: -8.2 },
-    { name: "Vanguard Real Estate", ticker: "VNQ", cat: "부동산", m3: -1.2, m6: 4.5, y1: 8.5 }
-  ]
-};
-
-let currentChart = null;
-let currentMarket = 'kr';
-let currentPeriod = 'm3'; 
-
-function formatReturn(val) {
-  if (val > 0) return { text: `+${val.toFixed(1)}%`, cls: 'val-up' };
-  if (val < 0) return { text: `${val.toFixed(1)}%`, cls: 'val-down' };
-  return { text: `0.0%`, cls: 'val-neu' };
-}
-
-function getPeriodName(period) {
-  if (period === 'm3') return '3개월';
-  if (period === 'm6') return '6개월';
-  if (period === 'y1') return '1년';
-}
-
-function setMarket(market) {
-  currentMarket = market;
-  document.getElementById('tab-kr').classList.remove('active');
-  document.getElementById('tab-us').classList.remove('active');
-  document.getElementById(`tab-${market}`).classList.add('active');
-  renderDashboard();
-}
-
-function setPeriod(period) {
-  currentPeriod = period;
-  document.getElementById('ptab-m3').classList.remove('active');
-  document.getElementById('ptab-m6').classList.remove('active');
-  document.getElementById('ptab-y1').classList.remove('active');
-  document.getElementById(`ptab-${period}`).classList.add('active');
-  renderDashboard();
-}
-
-function renderDashboard() {
-  const data = [...etfData[currentMarket]];
-  data.sort((a, b) => b[currentPeriod] - a[currentPeriod]);
-
-  document.getElementById('th-m3').classList.remove('highlight-col');
-  document.getElementById('th-m6').classList.remove('highlight-col');
-  document.getElementById('th-y1').classList.remove('highlight-col');
-  document.getElementById(`th-${currentPeriod}`).classList.add('highlight-col');
-
-  const periodName = getPeriodName(currentPeriod);
-  document.getElementById('chart-title').innerText = `📊 ${periodName} 누적 수익률 순위`;
-
-  const tbody = document.getElementById('table-body');
-  tbody.innerHTML = '';
-
-  data.forEach((item, index) => {
-    const rank = index + 1;
-    let rankBadgeClass = 'rank-badge';
-    if(rank === 1) rankBadgeClass += ' rank-1';
-    else if(rank === 2) rankBadgeClass += ' rank-2';
-    else if(rank === 3) rankBadgeClass += ' rank-3';
-
-    const m3 = formatReturn(item.m3);
-    const m6 = formatReturn(item.m6);
-    const y1 = formatReturn(item.y1);
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td><span class="${rankBadgeClass}">${rank}</span></td>
-      <td>
-        <span class="etf-name">${item.name}</span> <span class="etf-category">${item.cat}</span>
-        <span class="etf-ticker">${item.ticker}</span>
-      </td>
-      <td class="${m3.cls} ${currentPeriod === 'm3' ? 'highlight-cell' : ''}">${m3.text}</td>
-      <td class="${m6.cls} ${currentPeriod === 'm6' ? 'highlight-cell' : ''}">${m6.text}</td>
-      <td class="${y1.cls} ${currentPeriod === 'y1' ? 'highlight-cell' : ''}">${y1.text}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-
-  // 차트 라벨을 종목코드(ticker)에서 종목명(name)으로 변경! 이름이 길면 조금 잘라줍니다.
-  const labels = data.map((item, index) => {
-    let shortName = item.name.replace('KODEX ', '').replace('TIGER ', '').replace('PLUS ', '').replace('SPDR ', '').replace('Invesco ', '').replace('VanEck ', '');
-    return `${index + 1}. ${shortName}`;
-  });
-  
-  const chartData = data.map(item => item[currentPeriod]);
-  const bgColors = chartData.map(val => val >= 0 ? 'rgba(255, 77, 106, 0.8)' : 'rgba(91, 156, 246, 0.8)');
-  const borderColors = chartData.map(val => val >= 0 ? '#ff4d6a' : '#5b9cf6');
-
-  if (currentChart) {
-    currentChart.destroy();
-  }
-
-  const ctx = document.getElementById('returnChart').getContext('2d');
-  currentChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: `${periodName} 수익률(%)`,
-        data: chartData,
-        backgroundColor: bgColors,
-        borderColor: borderColors,
-        borderWidth: 1,
-        borderRadius: 4
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: '#1c1c23',
-          titleColor: '#eeeef0',
-          bodyColor: '#fff',
-          callbacks: {
-            title: function(context) {
-              const idx = context[0].dataIndex;
-              return `${data[idx].name} (${data[idx].ticker})`;
-            },
-            label: function(context) {
-              let val = context.raw;
-              return val >= 0 ? `수익률: +${val.toFixed(1)}%` : `수익률: ${val.toFixed(1)}%`;
-            }
-          }
-        }
-      },
-      scales: {
-        x: {
-          ticks: { color: '#999aaa', font: { size: 10 } },
-          grid: { display: false }
-        },
-        y: {
-          ticks: { 
-            color: '#666672', 
-            font: { size: 10 },
-            callback: value => value + '%'
-          },
-          grid: { color: 'rgba(255,255,255,0.05)' },
-          border: { display: false }
-        }
-      }
-    }
-  });
-}
-
-window.onload = () => {
-  renderDashboard();
-};
-</script>
-</body>
-</html>
+/* =====================================================================
+   [데이터 수정 안내] 
+   이후 업데이트 시
